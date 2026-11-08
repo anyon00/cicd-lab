@@ -1,6 +1,5 @@
 name: CI
 
-# 언제 깨어날까? → main에 push될 때, 그리고 PR이 올라올 때
 on:
   push:
     branches: [main]
@@ -8,11 +7,19 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest           # 임시 주방: 리눅스 컴퓨터 한 대 빌리기
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4    # 레시피 노트(코드) 가져오기
-      - uses: astral-sh/setup-uv@v5  # 도구(uv) 준비
-      - run: uv sync --locked        # 재료(의존성) 준비
-      - run: uv run ruff check .     # 맞춤법 검사
-      - run: uv run ruff format --check .
-      - run: uv run pytest -v        # 채점
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --locked
+
+      # pre-commit 검사기 보관 (다음 실행부터 내려받는 시간 절약)
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      # 내 컴퓨터와 같은 검사기를 모든 파일에 실행
+      - run: uv run pre-commit run --all-files --show-diff-on-failure
+
+      - run: uv run pytest -v
