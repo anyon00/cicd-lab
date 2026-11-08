@@ -1,0 +1,24 @@
+repos:
+  # 1) 범용 검사기 묶음 (남이 만들어 둔 것을 가져다 씀)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace      # 줄 끝 공백 제거
+      - id: end-of-file-fixer        # 파일 끝 줄바꿈 맞추기
+      - id: check-yaml               # YAML 문법 검사 (ci.yml 들여쓰기 실수 등)
+      - id: check-added-large-files  # 큰 파일 실수로 올리기 방지
+      - id: detect-private-key       # 개인키(SSH 키 등) 실수로 올리기 방지
+
+  # 2) ruff: 이 프로젝트에 설치된 버전을 그대로 사용
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: uv run ruff check --fix
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff format
+        entry: uv run ruff format
+        language: system
+        types: [python]

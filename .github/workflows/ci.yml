@@ -15,4 +15,4 @@ jobs:
       - run: uv sync --locked        # 재료(의존성) 준비
       - run: uv run ruff check .     # 맞춤법 검사
       - run: uv run ruff format --check .
-      - run: uv run pytest -v        # 채점
+      - run: uv run pytest -v        # 계량 검사
