@@ -13,4 +13,3 @@ def apply_discount(total: int, percent: int) -> int:
     if not 0 <= percent <= 100:
         raise ValueError("할인율은 0~100 사이여야 합니다")
     return total * (100 - percent) // 100
-    #return total * percent // 100
