@@ -12,5 +12,5 @@ def apply_discount(total: int, percent: int) -> int:
     """총액에 할인율(%)을 적용한 금액. 원 단위 미만은 버림."""
     if not 0 <= percent <= 100:
         raise ValueError("할인율은 0~100 사이여야 합니다")
-    # return total * (100 - percent) // 100
-    return total * percent // 100
+    return total * (100 - percent) // 100
+    #return total * percent // 100
